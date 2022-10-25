@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    {include file="public/meta"}
+    <title>邮件发送日志</title>
+
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页 <span class="c-gray en">&gt;</span>日志管理 <span class="c-gray en">&gt;</span>发送邮件通知记录<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <div class="text-c">
+        <form action="{:url()}" method="get">
+            <select name="status" class="input-text" style="vertical-align: middle;width: 120px">
+                <option value="">全部</option>
+                <option {$Request.param.status && $Request.param.status==1?'selected':''} value="1">发送成功</option>
+                <option {$Request.param.status && $Request.param.status==-1?'selected':''} value="-1">发送失败</option>
+            </select>
+            <input type="text" value="{$Request.param.email??''}"  class="input-text" style="width:250px" placeholder="输入邮箱搜索"  name="email">
+            <button type="submit" class="btn btn-success radius"  name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </form>
+
+    </div>
+
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="80">#</th>
+                <th width="100">邮箱</th>
+                <th width="80">发送状态</th>
+                <th width="80">尝试次数</th>
+                <th width="250">发送信息</th>
+                <th width="130">更新时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($data)}
+            {foreach $data as $item}
+            <tr class="text-c">
+                <td>{$item.id}</td>
+                <td >
+                    {$item.email}
+                </td>
+                <td>
+                    <span class="label {$item.status==1?'label-success':($item.status==-1?'label-danger':'label-primary')} radius">{$item.status==1?'成功':($item.status==-1?'失败':'待发送')}</span>
+                </td>
+                <td>
+                    {$item.try_count}
+                </td>
+                <td class="text-l" >{$item.content}</td>
+                <td>{$item.up_time}</td>
+            </tr>
+            {/foreach}
+
+            {/if}
+            </tbody>
+
+        </table>
+
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            {$data?$data->render()|raw:''}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script>
+
+</script>
+</body>
+</html>

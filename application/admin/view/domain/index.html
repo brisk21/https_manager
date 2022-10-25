@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    {include file="public/meta"}
+    <title>域名管理</title>
+
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页 <span class="c-gray en">&gt;</span>域名管理 <span class="c-gray en">&gt;</span>域名列表<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <div class="text-c">
+        <form action="{:url()}" method="get">
+            <input type="text" value="{$Request.param.domain??''}"  class="input-text" style="width:250px" placeholder="输入域名搜索"  name="domain">
+            <button type="submit" class="btn btn-success radius"  name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </form>
+
+    </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l">
+        <a href="javascript:;" title="新增" onclick="openPage('添加','{:url(\'form\')}','800','600')" class="btn btn-primary radius">
+            <i class="Hui-iconfont">&#xe600;</i></a></span> <span class="r">共有数据：<strong>{$data?$data->total():'0'}</strong> 条</span> </div>
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-hover table-bg table-sort">
+            <thead>
+            <tr class="text-c">
+                <th width="80">ID</th>
+                <th width="220">域名</th>
+                <th width="130">状态</th>
+                <th width="130">备注</th>
+                <th width="150">上次检测</th>
+                <th width="150">颁发日期</th>
+                <th width="150">截止日期</th>
+                <th width="130">更新时间</th>
+                <!--<th width="130">添加时间</th>-->
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {if !empty($data)}
+            {foreach $data as $item}
+            <tr class="text-c">
+                <td>{$item.id}</td>
+                <td onclick="copy(this)">{$item.domain}</td>
+                <td>
+                    <span class="label {$item.status==1?'label-success':'label-danger'} radius">{$item.status==1?'启用中':'已禁用'}</span>
+                </td>
+                <td>{$item.remark}</td>
+                <td>{$item.last_check_time}</td>
+                <td>{$item.start_time}</td>
+                <td>{$item.end_time}</td>
+                <td>{$item.up_time}</td>
+                <!--<td>{$item.add_time}</td>-->
+                <td class="td-manage">
+                    <a style="text-decoration:none" onClick="setStatus('{$item.status}','{$item.id}')" href="javascript:void(0) ;" title="{$item.status==1?'停用':'启用'}">
+                        <i class="Hui-iconfont">{$item.status==1?'&#xe631;':'&#xe615;'}</i>
+                    </a>
+
+                    <a title="编辑" href="javascript:;" onclick="openPage('添加','{:url(\'form\',[\'id\'=>$item.id])}','800','600')"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    <a title="发送检测" href="javascript:;" onclick="getInfo('{$item.id}')"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont Hui-iconfont-jishiqi"></i></a>
+
+
+                </td>
+            </tr>
+            {/foreach}
+
+            {/if}
+
+
+            </tbody>
+
+        </table>
+
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            {$data?$data->render()|raw:''}
+        </div>
+    </div>
+</div>
+
+{include file="public/footer"}
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script>
+    function getInfo(id) {
+        sendData("{:url('get_info')}",{id:id},function (res) {
+
+        })
+    }
+    function setStatus(status,id) {
+        layer.confirm('确定'+(status==1?'禁用':'启用')+'吗？',{title:null},function () {
+            sendData("{:url('action_data')}",{type:'setStatus',id:id,status:status==1?0:1},function (res) {
+                if (res.code==0){
+                    location.reload()
+                }
+            })
+        })
+    }
+
+    function toLog(domain) {
+        location.href = "{:url('/admin/log/echarts')}?domain="+domain
+    }
+</script>
+</body>
+</html>

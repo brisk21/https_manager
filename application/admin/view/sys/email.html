@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    {include file="public/meta"}
+    <title>发件邮箱配置</title>
+
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>首页 <span class="c-gray en">&gt;</span>系统配置 <span class="c-gray en">&gt;</span>发件系统配置<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <form action="{:url()}" method="post" class="form form-horizontal" id="check-form">
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">Host：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入host" class="input-text" name="host" value="{:isset($data.host)?$data.host:''}">
+                <span class="c-red">发送HOST，比如smtp.163.com</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">账号：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入账号" class="input-text" name="username" value="{:isset($data.username)?$data.username:''}">
+                <span class="c-red">发送账号，abc@163.com</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">授权码：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入授权码" class="input-text" name="password" value="{:isset($data.password)?$data.password:''}">
+                <span class="c-red">发送账号的密码或者授权码</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">发送端口：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入发送端口" class="input-text" name="port" value="{:isset($data.port)?$data.port:'465'}">
+                <span class="c-red">发送端口，必须在服务器开放相关的端口，否则发送失败</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">加密协议：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <select name="encryption" class="input-text">
+                    <option {:isset($data.encryption)&&$data.encryption=="ssl"?'selected':''} value="ssl">SSL</option>
+                    <option {:isset($data.encryption)&&$data.encryption=="tls"?'selected':''} value="tls">TLS</option>
+                </select>
+
+                <span class="c-red">支持tls和ssl，推荐ssl</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">网站名称：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入网站名称" class="input-text" name="website" value="{:isset($data.website)?$data.website:'Https管理平台'}">
+                <span class="c-red">发送时邮件里面显示的来源</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-2 col-sm-2">邮件标题：</label>
+            <div class="formControls col-xs-8 col-sm-7">
+                <input type="text" placeholder="请输入邮件标题" class="input-text" name="title" value="{:isset($data.title)?$data.title:'https证书到期提示'}">
+                <span class="c-red">发送时邮件里面显示的标题</span>
+            </div>
+            <div class="col-xs-2 col-sm-3"></div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <a class="btn btn-primary radius" type="submit" onclick="form_submit()">&nbsp;&nbsp;提交&nbsp;&nbsp;</a>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+{include file="public/footer"}
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.15/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<script>
+
+</script>
+</body>
+</html>

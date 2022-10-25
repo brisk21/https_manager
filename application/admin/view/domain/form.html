@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    {include file="public/meta"}
+    <title>域名管理</title>
+    <style>
+        .check_list{
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<article class="page-container">
+    <form action="{:url('action_data')}" method="post" class="form form-horizontal" id="check-form">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>域名地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="hidden" name="id" value="{$data?$data.id:''}">
+                <input type="text" class="input-text" autocomplete="off" value="{$data?$data.domain:''}" placeholder="请输入域名完整地址"  id="domain" name="domain">
+                <span class="c-red">http（s）://开头的完整地址，比如https://bs.top</span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="status" type="radio" value="1" id="status-1" {:isset($data)&&$data.status=='1' || !isset($data)?'checked':''}>
+                    <label for="status-1">启用</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="status-2" value="0" name="status" {:isset($data)&&$data.status=='0'?'checked':''}>
+                    <label for="status-2">禁用</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="remark" cols="" rows="" autocomplete="off"  class="textarea"  placeholder="输入备注说明" >{$data?$data.remark:''}</textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <a class="btn btn-primary radius" type="submit" onclick="form_submit(['domain'])">&nbsp;&nbsp;提交&nbsp;&nbsp;</a>
+                {if empty($Request.param.from)}
+                <a class="btn btn-default radius" style="margin-left: 10px" target="_parent" href="{:url('index')}">&nbsp;&nbsp;返回&nbsp;&nbsp;</a>
+                {/if}
+
+            </div>
+        </div>
+    </form>
+</article>
+{include file="public/footer"}
+<script src="/static/lib/jquery.form/jq.form.js"></script>
+<script>
+</script>
+</body>
+</html>

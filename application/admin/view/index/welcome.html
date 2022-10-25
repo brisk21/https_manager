@@ -1,0 +1,44 @@
+﻿<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+	{include file="public/meta"}
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container">
+
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">信息统计</th>
+			</tr>
+			<tr class="text-c">
+				<th>统计</th>
+				<th>数据库大小（MB）</th>
+				<th>域名数量</th>
+				<th>邮件队列数</th>
+				<th>通知成功数</th>
+				<th>当前通知失败数</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>总数</td>
+				<td id="dbSize">{:isset($data.dbSize)?$data.dbSize:'0'}</td>
+				<td id="domain">{:isset($data.domain)?$data.domain:'0'}</td>
+				<td id="logEmail">{:isset($data.logEmail)?$data.logEmail:'0'}</td>
+				<td id="logEmailSuc">{:isset($data.logEmailSuc)?$data.logEmailSuc:'0'}</td>
+				<td id="logEmailError">{:isset($data.logEmailError)?$data.logEmailError:'0'}</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+<footer class="footer mt-20">
+
+</footer>
+{include file="public/footer"}
+
+
+</body>
+</html>

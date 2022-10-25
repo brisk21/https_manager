@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* 你自己的样式 */
+
+/*分页开始*/
+.pagination{padding:10px 0; text-align:center;}
+.pagination li{border-radius:3px; border:1px solid #dfdfdf;display:inline-block;margin:0 2px;}
+.pagination .active{background:#09F; color:#FFF; border-color:#09F; margin:0 2px;}
+.pagination .disabled{color:#aaa;}
+.pagination a{ border-radius:3px;display:inline-block; padding:5px 12px;}
+.pagination span{border-radius:3px;display:inline-block;padding:5px 12px;}
+/*分页结束*/
+
+.td-manage .Hui-iconfont{font-size: 16px}
