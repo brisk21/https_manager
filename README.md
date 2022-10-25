@@ -4,7 +4,10 @@
 核心功能就两个：查询域名https信息、发送邮件提醒
 
 #### 页面展示
-![域名](https://images.gitee.com/uploads/images/xxxx.png "域名管理.png")
+![域名](./readme/domain.png "域名管理.png")
+![邮件记录](./readme/mail.png "邮件记录.png")
+![通知栏](./readme/notice.jpg "通知栏.png")
+![邮件内容](./readme/email-info.jpg "邮件内容.png")
 
 
 ## 安装
