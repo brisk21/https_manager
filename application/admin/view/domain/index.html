@@ -84,7 +84,9 @@
 <script>
     function getInfo(id) {
         sendData("{:url('get_info')}",{id:id},function (res) {
-
+            if (res.code==0){
+                location.reload()
+            }
         })
     }
     function setStatus(status,id) {
