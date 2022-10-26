@@ -5,17 +5,18 @@ namespace app\common\service;
 
 
 use app\common\model\Conf;
+use app\common\model\Domain;
 use app\common\model\LogEmail;
 
 class Timer
 {
     public static function check_domain($output = null)
     {
-        $model = new \app\common\model\Domain();
+        $model = new Domain();
         $where[] = ['status', '=', 1];
         //每天一次
         $where[] = ['last_check_time', '<', strtotime('today')];
-        $data = $model->list_data_for_check($where, 30);
+        $data = $model->list_data_for_check($where, input('limit',30,'intval'));
         if (empty($data)) return data_return_error('暂无需要检测的域名', -1, [], false);;
         $update = [];
         $notices = [];
