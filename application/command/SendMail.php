@@ -31,7 +31,7 @@ class SendMail extends Command
 
         trace('任务开始' . date('y-m-d H:i:s'), 'send_email');
 
-        Timer::send_mail($output);
+        Timer::send_mail(10,$output);
 
         $output->writeln('任务执行结束...'.date('y-m-d H:i:s'));
 

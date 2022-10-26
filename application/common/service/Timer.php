@@ -16,8 +16,8 @@ class Timer
         $where[] = ['status', '=', 1];
         //每天一次
         $where[] = ['last_check_time', '<', strtotime('today')];
-        $data = $model->list_data_for_check($where, input('limit',30,'intval'));
-        if (empty($data)) return data_return_error('暂无需要检测的域名', -1, [], false);;
+        $data = $model->list_data_for_check($where, input('limit', 30, 'intval'));
+        if (empty($data)) return data_return_error('暂无需要检测的域名', -1, [], false);
         $update = [];
         $notices = [];
         foreach ($data as $value) {
@@ -64,15 +64,16 @@ class Timer
                 (new LogEmail())->create_all($queue);
             }
         }
+        return data_return('success', [], 0, false);
     }
 
-    public static function send_mail($output = null)
+    public static function send_mail($limit = 10, $output = null)
     {
         set_time_limit(0);
         $model = new LogEmail();
         $where[] = ['status', 'in', [0, -1]];
         $where[] = ['try_count', '<', 3];
-        $data = $model->list_data_for_send($where, 1);
+        $data = $model->list_data_for_send($where, $limit);
         if (empty($data)) {
             is_object($output) && $output->writeln('暂无需要发送队列');
             return data_return_error('暂无需要发送队列', -1, [], false);
@@ -92,7 +93,7 @@ class Timer
                 'status' => $status
             ];
         }
-        is_object($output) && $output->writeln('发送操作完成：'.count($update_data));
+        is_object($output) && $output->writeln('发送操作完成：' . count($update_data));
         $model->saveAll($update_data);
 
         return data_return('ok', count($data), 0, false);
