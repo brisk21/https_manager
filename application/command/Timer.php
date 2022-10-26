@@ -45,6 +45,10 @@ class Timer extends Command
         $this->init($input, $output);
         // 创建定时器任务
         $worker = new Worker();
+        $runtimeDir = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR.'runtime'.DIRECTORY_SEPARATOR;
+        Worker::$stdoutFile = $runtimeDir. '/worker_out.log';    //打印输出到指定文件
+       // Worker::$pidFile = '/workerman.pid';//设置WorkerMan进程的pid文件路径 不建议使用
+        Worker::$logFile = $runtimeDir.'/worker.log';  //设置workerman日志文件位置
         $worker->count = 2;
         $worker->onWorkerStart = [$this, 'start'];
         $worker::runAll();
