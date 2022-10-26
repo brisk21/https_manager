@@ -17,9 +17,15 @@ class Timer
         //每天一次
         $where[] = ['last_check_time', '<', strtotime('today')];
         $data = $model->list_data_for_check($where, input('limit', 30, 'intval'));
-        if (empty($data)) return data_return_error('暂无需要检测的域名', -1, [], false);
+        if (empty($data)) {
+            return data_return_error('暂无需要检测的域名', -1, [], false);
+        }
         $update = [];
         $notices = [];
+        //提前x天提示
+        $day = config('notice.https_expire');
+        // 是否发送测试邮件
+        $sendMailImmediately = config('notice.send_mail_immediately');
         foreach ($data as $value) {
             $info = Bs::get_cert_info($value['domain']);
             $up = [
@@ -31,10 +37,8 @@ class Timer
                     'start_time' => $info['data']['validFrom_time_t'],
                     'end_time' => $info['data']['validTo_time_t'],
                 ]);
-                //提前x天提示
-                $day = config('notice.https_expire');
                 $noticeExpire = ($day > 0 ? $day : 15) * 86400;
-                if ($info['data']['validTo_time_t'] < time() + $noticeExpire) {
+                if ($sendMailImmediately || $info['data']['validTo_time_t'] < time() - $noticeExpire) {
                     $notices[] = [
                         'content' => '域名' . (Bs::parse_domain($value['domain'])) . '的https证书即将到期，到期时间为：' . date('Y-m-d H:i:s', $info['data']['validTo_time_t']) . '，请及时续约，以免到期造成访问异常问题~'
                     ];

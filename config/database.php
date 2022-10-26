@@ -23,7 +23,7 @@ return [
     // 端口
     'hostport'        => '',
     // 连接dsn
-    'dsn'             => str_replace("\\",'/','sqlite:'.__DIR__.'/../data/db/manager.db'),
+    'dsn'             => 'sqlite:'.__DIR__. DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'data'. DIRECTORY_SEPARATOR .'db'. DIRECTORY_SEPARATOR .'manager.db',
     // 数据库连接参数
     'params'          => [],
     // 数据库编码默认采用utf8

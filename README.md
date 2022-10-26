@@ -13,13 +13,13 @@
 ## 安装
 
 
-使用composer安装
+1、使用composer安装
 
 ~~~
 composer install
 ~~~
 
-配置域名（下面以monitor.test.top为例）
+2、配置域名（下面以monitor.test.top为例）
 ~~~
 server {
         listen        80;
@@ -36,7 +36,7 @@ server {
         }
 }
 ~~~
-Nginx伪静态
+3、Nginx伪静态
 ~~~
 location / {
    if (!-e $request_filename) {
@@ -44,10 +44,39 @@ location / {
     }
 }
 ~~~
-+ 复制install/struct.db到data/db/manager.db 数据库基础文件
-(main.sql是结构文件，struct.db是数据库文件可以直接用)
 
+4、复制sqlite数据库文件
 
+（1）自动复制
+    - composer install 命令执行完成后，自动复制数据库文件
+
+（2）如果发生未知错误，可以进行手动复制
+    - 可以直接执行 `php think copy_db_file` 快速进行复制
+      
+    - 复制install/struct.db到data/db/manager.db 数据库基础文件
+    (main.sql是结构文件，struct.db是数据库文件可以直接用)
+ 
+
+### 具体检测
+
+### 方式一：workerman定时器
+
+具体命令：
+```
+# 守护进程方式启动，每15秒执行一次定时器，定时检查域名，以及发送提醒邮件
+php think timer start --d --i 15
+
+# 停止
+php think timer stop
+
+# 重启
+php think timer restart --d --i 15
+
+```
+
+注：如果修改了代码，请务必重启定时器
+
+### 方式二：curl请求或linux定时任务
 
 ### 一、检测域名有效期
 ##### 定时任务api接口地址（如果域名数量小于30建议每天一次）
@@ -83,6 +112,6 @@ http://abc.manager.top/admin
 ### 四、其它说明
   + config/admin.php 管理员的登录账号信息
   + config/menus.php 后台管理菜单
-  + config/notice.php 配置距离多少天过期可以发送邮件
-  + data/db/manager.db 次乃sqlite数据库文件（不添加到版本控制）
+  + config/notice.php 配置距离多少天过期可以发送邮件，以及是否立即发送提醒邮件（默认开启）
+  + data/db/manager.db 以及sqlite数据库文件（不添加到版本控制）
   + 确保runtime、data目录可写
