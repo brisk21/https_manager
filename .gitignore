@@ -9,3 +9,4 @@ thinkphp
 .DS_Store
 /public/.htaccess
 /public/nginx.htaccess
+composer.lock

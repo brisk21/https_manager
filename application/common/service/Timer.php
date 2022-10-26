@@ -38,7 +38,7 @@ class Timer
                     'end_time' => $info['data']['validTo_time_t'],
                 ]);
                 $noticeExpire = ($day > 0 ? $day : 15) * 86400;
-                if ($sendMailImmediately || $info['data']['validTo_time_t'] < time() - $noticeExpire) {
+                if ($sendMailImmediately || $info['data']['validTo_time_t'] < time() + $noticeExpire) {
                     $notices[] = [
                         'content' => '域名' . (Bs::parse_domain($value['domain'])) . '的https证书即将到期，到期时间为：' . date('Y-m-d H:i:s', $info['data']['validTo_time_t']) . '，请及时续约，以免到期造成访问异常问题~'
                     ];
