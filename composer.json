@@ -37,5 +37,10 @@
         "allow-plugins": {
             "topthink/think-installer": true
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php think copy_db_file"
+        ]
     }
 }

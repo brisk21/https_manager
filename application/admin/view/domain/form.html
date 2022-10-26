@@ -16,7 +16,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>域名地址：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="hidden" name="id" value="{$data?$data.id:''}">
+                <input type="hidden" id="id" name="id" value="{$data?$data.id:''}">
                 <input type="text" class="input-text" autocomplete="off" value="{$data?$data.domain:''}" placeholder="请输入域名完整地址"  id="domain" name="domain">
                 <span class="c-red">http（s）://开头的完整地址，比如https://bs.top</span>
             </div>
@@ -40,12 +40,12 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">备注：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea name="remark" cols="" rows="" autocomplete="off"  class="textarea"  placeholder="输入备注说明" >{$data?$data.remark:''}</textarea>
+                <textarea id="remark" name="remark" cols="" rows="" autocomplete="off"  class="textarea"  placeholder="输入备注说明" >{$data?$data.remark:''}</textarea>
             </div>
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                <a class="btn btn-primary radius" type="submit" onclick="form_submit(['domain'])">&nbsp;&nbsp;提交&nbsp;&nbsp;</a>
+                <a class="btn btn-primary radius" type="submit" onclick="form_submit(['domain'], false, false, submitCallBack)">&nbsp;&nbsp;提交&nbsp;&nbsp;</a>
                 {if empty($Request.param.from)}
                 <a class="btn btn-default radius" style="margin-left: 10px" target="_parent" href="{:url('index')}">&nbsp;&nbsp;返回&nbsp;&nbsp;</a>
                 {/if}
@@ -57,6 +57,14 @@
 {include file="public/footer"}
 <script src="/static/lib/jquery.form/jq.form.js"></script>
 <script>
+    function submitCallBack(res) {
+        if ($('#id').val() === '' && res.code === 0) {
+            $('#domain').val('')
+            $('#status-1').prop("checked", true);
+            $('#status-2').prop("checked", false);
+            $('#remark').val('')
+        }
+    }
 </script>
 </body>
 </html>
