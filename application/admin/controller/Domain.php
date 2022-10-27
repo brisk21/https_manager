@@ -6,6 +6,7 @@ namespace app\admin\controller;
 
 use app\api\controller\Task;
 use app\common\service\Bs;
+use app\common\service\Timer;
 
 class Domain extends Base
 {
@@ -57,16 +58,10 @@ class Domain extends Base
         $id = request()->post('id');
         $uriInfo = model('Domain')->fetch_data($id);
         $info = Bs::get_cert_info($uriInfo['domain']);
-
         if ($info['code'] <> 0) {
             data_return_error($info['msg']);
         }
-        model('Domain')->update_data([
-            'last_check_time' => time(),
-            'start_time' => $info['data']['validFrom_time_t'],
-            'end_time' => $info['data']['validTo_time_t'],
-            'id' => $id
-        ]);
+        Timer::check_domain(null, $id);
         data_return('获取完成');
     }
 }

@@ -27,6 +27,7 @@
                 <th width="80">ID</th>
                 <th width="220">域名</th>
                 <th width="130">状态</th>
+                <th width="130">有效域名</th>
                 <th width="130">备注</th>
                 <th width="150">上次检测</th>
                 <th width="150">颁发日期</th>
@@ -45,6 +46,7 @@
                 <td>
                     <span class="label {$item.status==1?'label-success':'label-danger'} radius">{$item.status==1?'启用中':'已禁用'}</span>
                 </td>
+                <td><a style="color:blue;" href="javascript:viewDns('{$item.domain_dns}')">查看</a></td>
                 <td>{$item.remark}</td>
                 <td>{$item.last_check_time}</td>
                 <td>{$item.start_time}</td>
@@ -97,6 +99,15 @@
                 }
             })
         })
+    }
+    function viewDns(str) {
+        layer.open({
+            title: '证书管理的有效域名',
+            type: 1,
+            skin: 'layui-layer-rim',
+            area: ['420px', '240px'],
+            content: "<p style='padding: 10px;'>"+str+"</p>"
+        });
     }
 
     function toLog(domain) {

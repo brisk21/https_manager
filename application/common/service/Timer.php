@@ -10,12 +10,15 @@ use app\common\model\LogEmail;
 
 class Timer
 {
-    public static function check_domain($output = null)
+    public static function check_domain($output = null,$id=null)
     {
         $model = new Domain();
         $where[] = ['status', '=', 1];
         //每天一次
         $where[] = ['last_check_time', '<', strtotime('today')];
+        if ($id){
+            $where = ['id'=>$id];
+        }
         $data = $model->list_data_for_check($where, input('limit', 30, 'intval'));
         if (empty($data)) {
             return data_return_error('暂无需要检测的域名', -1, [], false);
@@ -33,9 +36,11 @@ class Timer
                 'id' => $value['id'],
             ];
             if (!empty($info['data']['validFrom_time_t'])) {
+                $domain_dns = str_replace(['DNS:'],'',$info['data']['extensions']['subjectAltName']);
                 $update[] = array_merge($up, [
                     'start_time' => $info['data']['validFrom_time_t'],
                     'end_time' => $info['data']['validTo_time_t'],
+                    'domain_dns' => $domain_dns,
                 ]);
                 $noticeExpire = ($day > 0 ? $day : 15) * 86400;
                 if ($sendMailImmediately || $info['data']['validTo_time_t'] < time() + $noticeExpire) {
