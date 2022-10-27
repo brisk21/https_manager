@@ -50,7 +50,15 @@
                 <td>{$item.remark}</td>
                 <td>{$item.last_check_time}</td>
                 <td>{$item.start_time}</td>
-                <td>{$item.end_time}</td>
+                <td>
+                    {if $item.end_time && strtotime($item.end_time) < strtotime("+15 days")}
+                    <span class="c-red"> {$item.end_time}</span>
+                    {else}
+                    <span class="c-green"> {$item.end_time}</span>
+                    {/if}
+
+
+                </td>
                 <td>{$item.up_time}</td>
                 <!--<td>{$item.add_time}</td>-->
                 <td class="td-manage">
@@ -60,7 +68,7 @@
 
                     <a title="编辑" href="javascript:;" onclick="openPage('添加','{:url(\'form\',[\'id\'=>$item.id])}','800','600')"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                     <a title="发送检测" href="javascript:;" onclick="getInfo('{$item.id}')"  class="ml-5" style="text-decoration:none"><i class="Hui-iconfont Hui-iconfont-jishiqi"></i></a>
-
+                    <a title="删除"  href="javascript:;" onclick="del('{$item.id}')"  class="ml-5 c-red" style="text-decoration:none"><i class="Hui-iconfont Hui-iconfont-del"></i></a>
 
                 </td>
             </tr>
@@ -94,6 +102,15 @@
     function setStatus(status,id) {
         layer.confirm('确定'+(status==1?'禁用':'启用')+'吗？',{title:null},function () {
             sendData("{:url('action_data')}",{type:'setStatus',id:id,status:status==1?0:1},function (res) {
+                if (res.code==0){
+                    location.reload()
+                }
+            })
+        })
+    }
+    function del(id) {
+        layer.confirm('确定删除吗？',{title:null},function () {
+            sendData("{:url('action_data')}",{type:'del',id:id},function (res) {
                 if (res.code==0){
                     location.reload()
                 }

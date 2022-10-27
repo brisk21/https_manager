@@ -74,4 +74,9 @@ class Domain extends Model
         return $data ? $data->toArray() : [];
     }
 
+    public function del_data($id)
+    {
+        return $this->where(['id'=>$id])->delete();
+    }
+
 }

@@ -35,6 +35,8 @@ class Domain extends Base
         $param = input('post.');
         if (!empty($param['type']) && $param['type'] == 'setStatus') {
             $res = model('Domain')->update_data($param);
+        } elseif (!empty($param['type']) && $param['type'] == 'del') {
+            $res = model('Domain')->del_data($param['id']);
         } else {
             if (!preg_match("/http[s]?:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is", $param['domain'])) {
                 data_return('接口地址不合规', [], -1);
