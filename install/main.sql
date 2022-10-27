@@ -15,15 +15,16 @@ CREATE TABLE "bs_https_conf" (
 -- ----------------------------
 DROP TABLE IF EXISTS "bs_https_domain";
 CREATE TABLE "bs_https_domain" (
-  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "domain" TEXT(255) DEFAULT '',
-  "status" integer(1) DEFAULT 0,
-  "remark" TEXT(255) DEFAULT '',
-  "start_time" integer(11) DEFAULT 0,
-  "end_time" integer(11) DEFAULT 0,
-  "last_check_time" integer(11) DEFAULT 0,
-  "add_time" integer(11) DEFAULT 0,
-  "up_time" integer(11) DEFAULT 0
+    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "domain" TEXT(255) DEFAULT '',
+    "status" integer(1) DEFAULT 0,
+    "remark" TEXT(255) DEFAULT '',
+    "domain_dns" TEXT DEFAULT '',
+    "start_time" integer(11) DEFAULT 0,
+    "end_time" integer(11) DEFAULT 0,
+    "last_check_time" integer(11) DEFAULT 0,
+    "add_time" integer(11) DEFAULT 0,
+    "up_time" integer(11) DEFAULT 0
 );
 
 -- ----------------------------
