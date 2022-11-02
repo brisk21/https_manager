@@ -1,6 +1,8 @@
 
 这是一个基于thinkphp5开发的一个监听域名https证书有效期的系统，可以自动发送邮件提醒管理员。 
 
+支持mysql和sqlite3数据库（v1.0）
+
 核心功能就两个：查询域名https信息、发送邮件提醒
 
 #### 页面展示
@@ -45,7 +47,10 @@ location / {
 }
 ~~~
 
-4、复制sqlite数据库文件
+**数据库配置，支持mysql和sqlite3** 
+
+
+①sqlite版本（v1.0以下)：复制sqlite数据库文件(如果是sqlite版本，即v1.0)
 
 （1）自动复制
     - composer install 命令执行完成后，自动复制数据库文件
@@ -55,7 +60,27 @@ location / {
       
     - 复制install/struct.db到data/db/manager.db 数据库基础文件
     (main.sql是结构文件，struct.db是数据库文件可以直接用)
+ （3）然后修改config/database.php填写type和dsn信息
  
+ 
+ ②采用mysql（v1.1以后）：install/https_manager_msyql.sql是mysql版本的数据库，导入到自己新建的数据库，然后修改config/database.php填写信息或者用下面的env配置亦可。
+ 
+ 支持.env配置环境变量示例如下：
+ ~~~
+[app]
+app_debug = true
+app_trace = false
+
+[database]
+TYPE = mysql
+hostname = 127.0.0.1
+database = https_manager
+username = root
+password = root
+hostport = 3306
+prefix = bs_https_
+debug = true
+ ~~~
 
 ### 具体检测
 
@@ -113,5 +138,7 @@ http://abc.manager.top/admin
   + config/admin.php 管理员的登录账号信息
   + config/menus.php 后台管理菜单
   + config/notice.php 配置距离多少天过期可以发送邮件，以及是否立即发送提醒邮件（默认开启）
-  + data/db/manager.db 以及sqlite数据库文件（不添加到版本控制）
+  + data/db/manager.db 以及sqlite数据库文件（不添加到版本控制,仅支持v1.0以下版本）
   + 确保runtime、data目录可写
+  + install/https_manager_msyql.sql 此乃mysql结构文件
+  + install/struct.db 此乃sqlite版基础数据库，仅支持v1.0以下
