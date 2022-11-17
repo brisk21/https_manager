@@ -39,7 +39,7 @@
             </div>
             <div class="row cl">
                 <div class="formControls col-xs-8 col-xs-offset-3">
-                    <input class="input-text size-L" id="verifyCode" name="verifyCode" type="text" placeholder="验证码" style="width:150px;">
+                    <input class="input-text size-L" id="verifyCode" name="verifyCode" type="text" autocomplete="off" placeholder="验证码" style="width:150px;">
                     <img id="vcode" src="{:captcha_src()}" onclick="getVerifyCode()"> <a id="kanbuq" href="javascript:getVerifyCode();">看不清，换一张</a> </div>
             </div>
            <!-- <div class="row cl">
@@ -57,7 +57,7 @@
         </form>
     </div>
 </div>
-<div class="footer">COPYRIGHT 2021 - 2022   alipay68.cn</div>
+<div class="footer">COPYRIGHT 2021 - 2022   https-管理平台</div>
 {include file="public/footer"}
 <script>
     function login() {
