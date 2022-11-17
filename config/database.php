@@ -22,7 +22,7 @@ return [
     'password'        => Env::get('database.password', 'root'),
     // 端口
     'hostport'        => Env::get('database.hostport', '3306'),
-    // 连接dsn，sqlite时打开只需要配置dsn即可
+    // 连接dsn，sqlite时打开只需要配置dsn即可,屏蔽后面的环境获取dsn
     //'dsn'             => 'sqlite:'.__DIR__. DIRECTORY_SEPARATOR .'..'. DIRECTORY_SEPARATOR .'data'. DIRECTORY_SEPARATOR .'db'. DIRECTORY_SEPARATOR .'manager.db',
     'dsn'             => Env::get('database.dsn', ''),
     // 数据库连接参数
